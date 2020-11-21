@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Github Users</string>
+    <string name="splash_text">GitHub\nUsers</string>
 </resources>
