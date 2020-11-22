@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:text="@string/splash_text"
             android:textAlignment="center"
-            android:textColor="@color/gray_700"
+            android:textColor="@color/color_primary"
             android:textSize="@dimen/text_48"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"

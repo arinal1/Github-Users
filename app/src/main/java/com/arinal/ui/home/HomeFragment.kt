@@ -35,7 +35,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>() {
     override fun initViews() = with(viewModel) {
         with(binding) {
             collapsingToolbar.setExpandedTitleColor(getColor(requireContext(), android.R.color.transparent))
-            collapsingToolbar.setCollapsedTitleTextColor(getColor(requireContext(), R.color.gray_500))
+            collapsingToolbar.setCollapsedTitleTextColor(getColor(requireContext(), R.color.color_primary_variant))
             rvShimmer.adapter = shimmerAdapter
             rvUsers.adapter = usersAdapter
             rvUsers.addOnScrollListener(endlessScroll)

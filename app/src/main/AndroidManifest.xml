@@ -15,7 +15,7 @@
         android:theme="@style/Theme.GithubUsers">
         <activity
             android:name=".ui.MainActivity"
-            android:theme="@style/GithubUsers.FullScreen">
+            android:theme="@style/Theme.GithubUsers.FullScreen">
             <intent-filter>
                 <category android:name="android.intent.category.LAUNCHER" />
                 <action android:name="android.intent.action.MAIN" />

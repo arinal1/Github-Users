@@ -2,21 +2,20 @@
     <!-- Base application theme. -->
     <style name="Theme.GithubUsers" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/gray_500</item>
-        <item name="colorPrimaryVariant">@color/gray_900</item>
-        <item name="colorOnPrimary">@color/black</item>
+        <item name="colorPrimary">@color/color_primary</item>
+        <item name="colorPrimaryVariant">@color/color_primary_variant</item>
+        <item name="colorOnPrimary">@color/color_on_primary</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/blue_500</item>
-        <item name="colorSecondaryVariant">@color/blue_500</item>
-        <item name="colorOnSecondary">@color/black</item>
+        <item name="colorSecondary">@color/color_secondary</item>
+        <item name="colorSecondaryVariant">@color/color_secondary_variant</item>
+        <item name="colorOnSecondary">@color/color_on_secondary</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorOnPrimary</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/color_on_primary</item>
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="GithubUsers.FullScreen" parent="Theme.GithubUsers">
+    <style name="Theme.GithubUsers.FullScreen" parent="Theme.GithubUsers">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
     </style>
 </resources>

@@ -8,7 +8,7 @@
         android:id="@+id/v_avatar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_250sdp"
-        android:background="@color/gray_500"
+        android:background="@color/color_primary_variant"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -17,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/_24sdp"
         android:layout_margin="@dimen/_16sdp"
-        android:background="@color/gray_500"
+        android:background="@color/color_primary_variant"
         app:layout_constraintTop_toBottomOf="@id/v_avatar" />
 
     <View
@@ -25,7 +25,7 @@
         android:layout_width="@dimen/match_constraint"
         android:layout_height="@dimen/_16sdp"
         android:layout_marginTop="@dimen/_8sdp"
-        android:background="@color/gray_500"
+        android:background="@color/color_primary_variant"
         app:layout_constraintEnd_toEndOf="@id/v_name"
         app:layout_constraintStart_toStartOf="@+id/v_name"
         app:layout_constraintTop_toBottomOf="@id/v_name" />
@@ -35,7 +35,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/_1sdp"
         android:layout_marginTop="@dimen/_16sdp"
-        android:background="@color/gray_500"
+        android:background="@color/color_primary_variant"
         app:layout_constraintTop_toBottomOf="@+id/v_username" />
 
     <LinearLayout
