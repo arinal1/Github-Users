@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <View
+        android:id="@+id/v_avatar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_250sdp"
+        android:background="@color/gray_500"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/v_name"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_24sdp"
+        android:layout_margin="@dimen/_16sdp"
+        android:background="@color/gray_500"
+        app:layout_constraintTop_toBottomOf="@id/v_avatar" />
+
+    <View
+        android:id="@+id/v_username"
+        android:layout_width="@dimen/match_constraint"
+        android:layout_height="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:background="@color/gray_500"
+        app:layout_constraintEnd_toEndOf="@id/v_name"
+        app:layout_constraintStart_toStartOf="@+id/v_name"
+        app:layout_constraintTop_toBottomOf="@id/v_name" />
+
+    <View
+        android:id="@+id/v_separator"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_1sdp"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:background="@color/gray_500"
+        app:layout_constraintTop_toBottomOf="@+id/v_username" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/v_separator">
+
+        <include layout="@layout/item_shimmer_detail_list" />
+
+        <include layout="@layout/item_shimmer_detail_list" />
+
+        <include layout="@layout/item_shimmer_detail_list" />
+
+        <include layout="@layout/item_shimmer_detail_list" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

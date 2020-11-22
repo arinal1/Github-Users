@@ -2,6 +2,7 @@ package com.arinal.ui.home
 
 import androidx.core.content.ContextCompat.getColor
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.arinal.R
@@ -58,26 +59,24 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>() {
 
     override fun observeLiveData() {
         viewModel.userList.observe(viewLifecycleOwner, {
-            usersAdapter.submitList(it)
+            if (!viewModel.isOnSearch()) usersAdapter.submitList(it)
         })
         viewModel.searchList.observe(viewLifecycleOwner, {
-            usersAdapter.submitList(it)
+            if (viewModel.isOnSearch()) usersAdapter.submitList(it)
         })
-        viewModel.searchQuery.observe(viewLifecycleOwner,{
+        viewModel.searchQuery.observe(viewLifecycleOwner, {
             lifecycleScope.launch {
                 queryJob.cancelAndJoin()
                 queryJob = launch {
                     delay(500)
-                    if (it?.toString().isNullOrEmpty()) {
+                    if (!it?.toString().isNullOrEmpty()) viewModel.startSearch()
+                    else if (viewModel.isOnSearch()) {
                         viewModel.stopSearch()
-                        usersAdapter.submitList(viewModel.userList.value)
+                        if (viewModel.userList.value?.size ?: 0 <= 0) viewModel.loadData()
+                        else usersAdapter.submitList(viewModel.userList.value)
                         binding.etSearch.clearFocus()
                         binding.btnClearSearch.requestFocus()
                         goToTop()
-                    } else {
-                        viewModel.setOnSearchMode()
-                        viewModel.clearSearchList()
-                        viewModel.searchUsers()
                     }
                     endlessScroll.resetData()
                 }
@@ -91,6 +90,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>() {
         binding.appBar.setExpanded(true, true)
     }
 
-    private fun onItemClick(position: Int) = Unit
+    private fun onItemClick(position: Int) {
+        viewModel.selectedIndex = position
+        findNavController().navigate(R.id.action_homeFragment_to_detailFragment)
+    }
 
 }

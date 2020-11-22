@@ -5,4 +5,10 @@
     <string name="avatar">Avatar</string>
     <string name="go_to_top">Go To Top</string>
     <string name="clear">Clear</string>
+    <string name="work">Work</string>
+    <string name="location">Location</string>
+    <string name="email">Email</string>
+    <string name="blog">Blog</string>
+    <string name="user">User</string>
+    <string name="swipe_down_to_refresh">Swipe Down To Refresh</string>
 </resources>

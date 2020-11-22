@@ -25,4 +25,9 @@ class MainActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
     }
 
+    override fun onBackPressed() {
+        viewModel.stopGetUser()
+        super.onBackPressed()
+    }
+
 }

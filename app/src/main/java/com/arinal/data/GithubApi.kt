@@ -1,11 +1,18 @@
 package com.arinal.data
 
 import com.arinal.data.model.SearchModel
+import com.arinal.data.model.UserModel
 import com.arinal.data.model.UsersModel
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface GithubApi {
+
+    @GET("users/{username}")
+    suspend fun getUser(
+        @Path("username") username: String
+    ): UserModel
 
     @GET("users")
     suspend fun getUsers(
