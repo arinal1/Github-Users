@@ -1,6 +1,7 @@
 package com.arinal.ui.home
 
 import androidx.core.content.ContextCompat.getColor
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.arinal.R
@@ -12,12 +13,17 @@ import com.arinal.ui.home.adapter.UsersAdapter
 import com.arinal.utils.EndlessScrollListener
 import com.arinal.utils.EventObserver
 import com.bumptech.glide.Glide
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancelAndJoin
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>() {
 
+    private var queryJob: Job = Job()
     private val endlessScroll = object : EndlessScrollListener() {
-        override fun onLoadMore() = viewModel.getUsers()
+        override fun onLoadMore() = viewModel.loadData()
     }
     private val shimmerAdapter by lazy { ShimmerAdapter(layoutInflater, 20) }
     private val usersAdapter by lazy { UsersAdapter(layoutInflater, Glide.with(requireContext()), ::onItemClick) }
@@ -35,29 +41,54 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>() {
             rvUsers.addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     val firstVisibleItem = (recyclerView.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
-                    if (firstVisibleItem == 0) binding.fabScroll.hide()
-                    else binding.fabScroll.show()
+                    if (firstVisibleItem == 0) fabScroll.hide()
+                    else fabScroll.show()
                     super.onScrolled(recyclerView, dx, dy)
                 }
             })
             swipeLayout.setOnRefreshListener {
                 swipeLayout.isRefreshing = false
-                clearUserList()
+                clearList()
                 endlessScroll.resetData()
-                getUsers()
+                loadData()
             }
         }
-        getUsers()
+        initData()
     }
 
     override fun observeLiveData() {
         viewModel.userList.observe(viewLifecycleOwner, {
             usersAdapter.submitList(it)
         })
-        viewModel.goToTop.observe(viewLifecycleOwner, EventObserver {
-            binding.rvUsers.smoothScrollToPosition(0)
-            binding.appBar.setExpanded(true, true)
+        viewModel.searchList.observe(viewLifecycleOwner, {
+            usersAdapter.submitList(it)
         })
+        viewModel.searchQuery.observe(viewLifecycleOwner,{
+            lifecycleScope.launch {
+                queryJob.cancelAndJoin()
+                queryJob = launch {
+                    delay(500)
+                    if (it?.toString().isNullOrEmpty()) {
+                        viewModel.stopSearch()
+                        usersAdapter.submitList(viewModel.userList.value)
+                        binding.etSearch.clearFocus()
+                        binding.btnClearSearch.requestFocus()
+                        goToTop()
+                    } else {
+                        viewModel.setOnSearchMode()
+                        viewModel.clearSearchList()
+                        viewModel.searchUsers()
+                    }
+                    endlessScroll.resetData()
+                }
+            }
+        })
+        viewModel.goToTop.observe(viewLifecycleOwner, EventObserver { goToTop() })
+    }
+
+    private fun goToTop() {
+        binding.rvUsers.scrollToPosition(0)
+        binding.appBar.setExpanded(true, true)
     }
 
     private fun onItemClick(position: Int) = Unit

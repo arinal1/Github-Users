@@ -52,16 +52,38 @@
                     app:layout_scrollFlags="scroll|enterAlways" />
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 
-            <EditText
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_14sdp"
-                android:layout_marginEnd="@dimen/_14sdp"
-                android:drawableStart="@drawable/ic_search"
-                android:drawablePadding="@dimen/_8sdp"
-                android:hint="@string/search_github_users"
-                android:inputType="text"
-                tools:ignore="Autofill,LabelFor" />
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/et_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_14sdp"
+                    android:layout_marginEnd="@dimen/_14sdp"
+                    android:drawableStart="@drawable/ic_search"
+                    android:drawablePadding="@dimen/_8sdp"
+                    android:hint="@string/search_github_users"
+                    android:inputType="text"
+                    android:text="@={viewModel.searchQuery}"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="Autofill,LabelFor" />
+
+                <ImageButton
+                    android:id="@+id/btn_clear_search"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?selectableItemBackground"
+                    android:contentDescription="@string/clear"
+                    android:onClick="@{()->viewModel.cancelSearch()}"
+                    android:padding="@dimen/_5sdp"
+                    android:src="@drawable/ic_close"
+                    android:visibility="@{!viewModel.searchQuery.empty ? View.VISIBLE : View.GONE}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/et_search"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -96,7 +118,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
-                    app:bindLoading="@{viewModel.isLoading &amp;&amp; viewModel.userList.empty}"
+                    app:bindLoading="@{viewModel.isLoading &amp;&amp; (viewModel.userList.empty || (!viewModel.searchQuery.empty &amp;&amp; viewModel.searchList.empty))}"
                     app:layout_constraintTop_toTopOf="parent"
                     app:shimmer_duration="800"
                     tools:visibility="gone">
@@ -114,12 +136,13 @@
                 <TextView
                     android:id="@+id/tv_message"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="@dimen/_250sdp"
                     android:layout_margin="@dimen/_24sdp"
                     android:gravity="center"
                     android:text="@{viewModel.errorMessage}"
                     android:textSize="@dimen/text_24"
                     android:visibility="@{!viewModel.errorMessage.empty &amp;&amp; !viewModel.isLoading ? View.VISIBLE : View.GONE}"
+                    app:layout_constraintTop_toTopOf="parent"
                     tools:visibility="gone" />
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -127,12 +150,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:overScrollMode="never"
+                    android:tag="@{viewModel.isOnSearch}"
                     android:visibility="@{!viewModel.userList.empty &amp;&amp; viewModel.errorMessage.empty ? View.VISIBLE : View.GONE}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:itemCount="20"
                     tools:listitem="@layout/item_users" />
-
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

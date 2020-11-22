@@ -2,6 +2,7 @@
     <string name="app_name">Github Users</string>
     <string name="splash_text">GitHub\nUsers</string>
     <string name="search_github_users">Search Github Users</string>
-    <string name="avatar">avatar</string>
+    <string name="avatar">Avatar</string>
     <string name="go_to_top">Go To Top</string>
+    <string name="clear">Clear</string>
 </resources>

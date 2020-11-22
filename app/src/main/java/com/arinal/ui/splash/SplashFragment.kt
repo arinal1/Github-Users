@@ -16,7 +16,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, MainViewModel>() {
     override fun observeLiveData() = Unit
     override fun initViews() {
         lifecycleScope.launch {
-            delay(2000)
+            delay(1000)
             findNavController().navigate(R.id.action_splashFragment_to_homeFragment)
         }
     }
