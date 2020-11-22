@@ -13,8 +13,8 @@ import com.arinal.BR
 
 abstract class BaseFragment<V : ViewDataBinding, VM : ViewModel> : Fragment() {
 
-    lateinit var binding: V
-    abstract val viewModel: VM
+    protected lateinit var binding: V
+    protected abstract val viewModel: VM
 
     @LayoutRes
     abstract fun setLayout(): Int
