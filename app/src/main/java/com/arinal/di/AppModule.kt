@@ -23,7 +23,7 @@ fun provideHttpLogging() = HttpLoggingInterceptor().apply {
 fun provideOkHttpClientBuilder(
     githubInterceptor: GithubInterceptor,
     loggingInterceptor: HttpLoggingInterceptor
-) = OkHttpClient().newBuilder()
+): OkHttpClient = OkHttpClient().newBuilder()
     .addInterceptor(loggingInterceptor)
     .addInterceptor(githubInterceptor)
     .build()

@@ -2,7 +2,6 @@ package com.arinal.ui.detail
 
 import android.content.Intent
 import android.net.Uri
-import androidx.navigation.fragment.findNavController
 import com.arinal.R
 import com.arinal.databinding.FragmentDetailBinding
 import com.arinal.ui.MainViewModel
@@ -44,7 +43,7 @@ class DetailFragment : BaseFragment<FragmentDetailBinding, MainViewModel>() {
         binding.toolbar.title = getString(R.string.user)
         binding.toolbar.setNavigationIcon(R.drawable.ic_back)
         binding.toolbar.setNavigationOnClickListener {
-            findNavController().popBackStack()
+            activity?.onBackPressed()
         }
         binding.swipeLayout.setOnRefreshListener {
             binding.swipeLayout.isRefreshing = false
