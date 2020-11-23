@@ -14,7 +14,8 @@ data class LiveUserModel(
 ) {
     fun postValue(user: UserModel) {
         avatarUrl.postValue(user.avatarUrl)
-        blog.postValue(user.blog ?: "")
+        val blog = user.blog ?: ""
+        if (blog.startsWith("https://") || blog.startsWith("http://")) this.blog.postValue(blog)
         company.postValue(user.company ?: "")
         email.postValue(user.email ?: "")
         id.postValue(user.id)
